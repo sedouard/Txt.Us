@@ -8,6 +8,8 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var textRoutes = require('./routes/twilio.js');
+
 
 var app = express();
 
@@ -31,6 +33,9 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/receive_message', textRoutes.receive_message);
+app.get('/retrieve_messages', textRoutes.retrieve_messages);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
