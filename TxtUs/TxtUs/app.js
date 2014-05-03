@@ -9,6 +9,9 @@ var path = require('path');
 var twilio_credentials = require('./twilio_credentials.json');
 var twilio = require('twilio');
 
+var client = new twilio.RestClient(twilio_credentials.twilio_sid, twilio_credentials.twilio_auth);
+
+
 // { ToCountry: 'US',
 //     ToState: 'VA',
 //     SmsMessageSid: 'SMdbef8677f992a26b28df2bc4305035a9',
