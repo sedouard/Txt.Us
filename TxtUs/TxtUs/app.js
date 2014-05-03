@@ -4,11 +4,77 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var textRoutes = require('./routes/twilio.js');
+var twilio_credentials = require('./twilio_credentials.json');
+var twilio = require('twilio');
+
+// { ToCountry: 'US',
+//     ToState: 'VA',
+//     SmsMessageSid: 'SMdbef8677f992a26b28df2bc4305035a9',
+//     NumMedia: '0',
+//     ToCity: 'VIENNA',
+//     FromZip: '94546',
+//     SmsSid: 'SMdbef8677f992a26b28df2bc4305035a9',
+//     FromState: 'CA',
+//     SmsStatus: 'received',
+//     FromCity: 'HAYWARD',
+//     Body: 'M: Svc\nT: SF \nW: LAS\nTh: home',
+//     FromCountry: 'US',
+//     To: '+17037634332',
+//     ToZip: '22182',
+//     MessageSid: 'SMdbef8677f992a26b28df2bc4305035a9',
+//     AccountSid: 'AC50cf5db22487012e70e1eb2e4335bcba',
+//     From: '+15107541837',
+//     ApiVersion: '2010-04-01' }
+
+
+var location = {};
+
+var receive_message = function(req, res){
+
+
+  var message = req.query;
+
+  console.log(message);
+
+  var messageArray = message.Body.split(':');
+
+  if(messageArray.length !== 3){
+    return sendSms(message.From, "Invalid message", function(){ res.send('') } );
+  }
+
+  switch(messageArray[0]){
+    case 's':
+
+
+      break;
+    case 'r':
+
+      break;
+    default:
+      return sendSms(message.From, "Invalid command", function(){ res.send('') } );
+  }
+
+  var sms = new Sms({
+    number: String,
+    time: Date,
+    location: String
+  });
+
+
+
+};
+
+var sendSms = function(number, message, cb){
+  console.log("sending "+message+"to number: " + number);
+
+  returnclient.sendMessage({
+    to:number,
+    from: '+17037634332',
+    body: message
+  }, cb)
+}
 
 
 var app = express();
@@ -31,11 +97,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-app.get('/receive_message', textRoutes.receive_message);
+app.get('/receive_message', receive_message);
 
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+
+

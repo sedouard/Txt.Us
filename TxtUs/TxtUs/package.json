@@ -12,6 +12,5 @@
     "jade": "*",
     "stylus": "*",
     "twilio": "*",
-    "mongoose": "*"
   }
 }
