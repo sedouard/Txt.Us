@@ -34,7 +34,6 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/receive_message', textRoutes.receive_message);
-app.get('/retrieve_messages', textRoutes.retrieve_messages);
 
 
 http.createServer(app).listen(app.get('port'), function(){
