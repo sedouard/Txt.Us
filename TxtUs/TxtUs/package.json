@@ -1,0 +1,10 @@
+{
+  "name": "TxtUs",
+  "version": "0.0.0",
+  "description": "TxtUs",
+  "main": "server.js",
+  "author": {
+    "name": "sedouard",
+    "email": ""
+  }
+}
