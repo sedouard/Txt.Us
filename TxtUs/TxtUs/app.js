@@ -32,7 +32,9 @@ var client = new twilio.RestClient(twilio_credentials.twilio_sid, twilio_credent
 //     ApiVersion: '2010-04-01' }
 
 
-var location = {};
+var location = {
+
+};
 
 var receive_message = function(req, res){
 
@@ -41,33 +43,39 @@ var receive_message = function(req, res){
 
   console.log(message);
 
-  var messageArray = message.Body.split(':');
+  var messageArray = message.Body.split('\n');
+  var from = message.From;
 
-  if(messageArray.length !== 3){
-    return sendSms(message.From, "Invalid message", function(){ res.send('') } );
+  if(messageArray.length < 1){
+    return sendSms(from, "sent a proper command!", function(){ res.send('') } );
   }
 
-  switch(messageArray[0]){
-    case 's':
+  for(int i = 0; i<messageArray.length; i++){
+    var m = messageArray[i].split(":");
+    
+    switch( strip(m[0]) ){
+      case 's':
+        if(!location[from]) location[from] = {name:}
 
 
-      break;
-    case 'r':
+        break;
+      case 'r':
 
-      break;
-    default:
-      return sendSms(message.From, "Invalid command", function(){ res.send('') } );
+
+        break;
+      default:
+        return sendSms(message.From, "Invalid command", function(){ res.send('') } );
+    }
+    
   }
-
-  var sms = new Sms({
-    number: String,
-    time: Date,
-    location: String
-  });
 
 
 
 };
+
+var strip = function(str){
+   return str.replace(/(^\s+|\s+$)/g,'');
+}
 
 var sendSms = function(number, message, cb){
   console.log("sending "+message+"to number: " + number);
