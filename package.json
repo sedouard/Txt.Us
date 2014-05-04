@@ -17,7 +17,8 @@
   ],
   "dependencies": {
     "jade": "*",
-    "express": "~3.1.0"
+    "express": "~3.1.0",
+		"twilio": "*"
   },
   "noAnalyze": true,
   "license": "Apache",
