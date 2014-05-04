@@ -113,10 +113,26 @@ var receive_message = function(req, res){
       }
 
       if(result == null){
-        return sendSms(from, "send a proper command!", function(){ res.send('') } );  
+        return sendSms(from, "send a proper command!", function(err, responseData) { //this function is executed when a response is received from Twilio
+
+          if (!err) {
+              console.log(responseData.from); // outputs "+14506667788"
+              console.log(responseData.body); // outputs "word to your mother."
+          }
+
+          res.send('');
+        });
       }
       else{
-        return sendSms(from, parts[0] + 'will be at ' + result[0], function(){ res.send('') } );
+        return sendSms(from, parts[0] + 'will be at ' + result[0], function(err, responseData) { //this function is executed when a response is received from Twilio
+
+          if (!err) {
+              console.log(responseData.from); // outputs "+14506667788"
+              console.log(responseData.body); // outputs "word to your mother."
+          }
+
+          res.send('');
+        });
       }
 
       //lookup name 
