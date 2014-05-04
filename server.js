@@ -14,14 +14,16 @@ var g_Users = {
   christine: "+15107541837",
   livi: "+17038223932",
   kat: "+15714352171",
-  matt: "+17037919734"
+  matt: "+17037919734",
+  steven: "+14079638488"
 };
 
 var g_Location = {
    "+15107541837" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
    "+17038223932" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
    "+15714352171" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
-   "+17037919734" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]}
+   "+17037919734" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
+   "+14079638488": { 'm': [], 't':['The Weed Shop'], 'w': [], 'r': [], 'f': [], 's': [] }
 };
 
 
@@ -48,8 +50,7 @@ var g_Location = {
 
 
 var receive_message = function(req, res){
-
-
+  console.log('hello!!!');
   var message = req.query;
 
   console.log(message);
@@ -60,10 +61,10 @@ var receive_message = function(req, res){
   if(messageArray.length < 1){
     return sendSms(from, "send a proper command!", function(){ res.send('') } );
   }
-
+  
   for(var i = 0; i<messageArray.length; i++){
     var m = strip(messageArray[i]).toLowerCase();
-
+    console.log('parsing message ' + m);
     //parse scheduling request
     if(m[0] === 's'){
       m = strip(m.substring(1,m.length));
@@ -79,11 +80,13 @@ var receive_message = function(req, res){
 
     //parse query
     //where is <user> on <day>
-    else if(m == 'where is'){
+    else if (m.indexOf('where is') > -1) {
+      console.log('got where is command');
       m = strip(m.replace('where is', ''));
       //steven on tuesday
       var parts = m.split(' ');
       var phoneNumber = g_Users[parts[0]];
+      console.log('returning location for user ' + parts[0] + ' phone ' + phoneNumber);
       var locations = g_Location[phoneNumber];
       var result = null;
       switch(parts[2]){
@@ -93,7 +96,7 @@ var receive_message = function(req, res){
           break;
         //tomorrow is always tuesday HACK HACK
         case 'tuesday':
-          result = locations.t;
+            result = locations['t'];
           break;
         case 'wednesday':
           result = locations.w;
@@ -113,16 +116,13 @@ var receive_message = function(req, res){
         return sendSms(from, "send a proper command!", function(){ res.send('') } );  
       }
       else{
-        return sendSms(from, parts[0] + 'will be at ' + result, function(){ res.send('') } );
+        return sendSms(from, parts[0] + 'will be at ' + result[0], function(){ res.send('') } );
       }
 
       //lookup name 
     }
 
   }
-
-
-  return sendSms(from, "location saved!", function(){ res.send('') } );
 
 };
 
