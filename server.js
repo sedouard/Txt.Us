@@ -11,17 +11,17 @@ var twilio = require('twilio');
 
 var client = new twilio.RestClient(twilio_credentials.twilio_sid, twilio_credentials.twilio_auth);
 
-var g_Users = [
-  Christine:{
-    phoneNumber: "+15107541837"
-  },
-  Livi:{
-    phoneNumber: "+17038223932"
-  }
-  Kat:{
-    phoneNumer:"+15714352171"
-  }
-];
+var g_Users = {
+  christine: "+15107541837",
+  livi: "+17038223932",
+  kat: "+15714352171"
+};
+
+var g_Location = {
+   "+15107541837" : [],
+   "+17038223932" : [],
+   "+15714352171" : []
+};
 
 
 // { ToCountry: 'US',
@@ -44,9 +44,7 @@ var g_Users = [
 //     ApiVersion: '2010-04-01' }
 
 
-var location = {
 
-};
 
 var receive_message = function(req, res){
 
@@ -62,7 +60,7 @@ var receive_message = function(req, res){
     return sendSms(from, "send a proper command!", function(){ res.send('') } );
   }
 
-  for(int i = 0; i<messageArray.length; i++){
+  for(var i = 0; i<messageArray.length; i++){
     var m = strip(messageArray[i]).toLowerCase();
 
     if(m[0] === 's'){
@@ -102,7 +100,6 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
