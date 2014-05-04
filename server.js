@@ -1,14 +1,18 @@
-
 /**
  * Module dependencies.
  */
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57b1e64292e2c376926f7a44b63884f9bf399b32
 var express = require('express');
 var http = require('http');
 var path = require('path');
 var twilio_credentials = require('./twilio_credentials.json');
 var twilio = require('twilio');
 
+<<<<<<< HEAD
 var client = new twilio.RestClient(twilio_credentials.twilio_sid, twilio_credentials.twilio_auth);
 
 var g_Users = {
@@ -24,6 +28,12 @@ var g_Location = {
    "+15714352171" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
    "+17037919734" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]}
 };
+=======
+
+var client = new twilio.RestClient(twilio_credentials.twilio_sid, twilio_credentials.twilio_auth);
+
+
+>>>>>>> 57b1e64292e2c376926f7a44b63884f9bf399b32
 
 
 // { ToCountry: 'US',
@@ -48,6 +58,7 @@ var g_Location = {
 
 
 
+<<<<<<< HEAD
 var receive_message = function(req, res){
 
 
@@ -130,17 +141,76 @@ var receive_message = function(req, res){
 var strip = function(str){
    return str.replace(/(^\s+|\s+$)/g,'');
 }
+=======
+var location = {};
+
+
+var receive_message = function(req, res){
+
+
+
+
+  var message = req.query;
+
+
+  console.log(message);
+
+
+  var messageArray = message.Body.split(':');
+
+
+  if(messageArray.length !== 3){
+    return sendSms(message.From, "Invalid message", function(){ res.send('') } );
+  }
+
+
+  switch(messageArray[0]){
+    case 's':
+
+
+
+
+      break;
+    case 'r':
+
+
+      break;
+    default:
+      return sendSms(message.From, "Invalid command", function(){ res.send('') } );
+  }
+
+
+  var sms = new Sms({
+    number: String,
+    time: Date,
+    location: String
+  });
+
+
+
+
+
+
+};
+
+>>>>>>> 57b1e64292e2c376926f7a44b63884f9bf399b32
 
 var sendSms = function(number, message, cb){
   console.log("sending "+message+"to number: " + number);
 
+<<<<<<< HEAD
   return client.sendMessage({
+=======
+
+  returnclient.sendMessage({
+>>>>>>> 57b1e64292e2c376926f7a44b63884f9bf399b32
     to:number,
     from: '+17037634332',
     body: message
   }, cb)
 }
 
+<<<<<<< HEAD
 
 var app = express();
 
@@ -156,12 +226,41 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+=======
+
+
+
+var app = express();
+
+
+// all environments
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+>>>>>>> 57b1e64292e2c376926f7a44b63884f9bf399b32
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+<<<<<<< HEAD
 app.get('/receive_message', receive_message);
+=======
+
+app.get('/receive_message', receive_message);
+
+
+>>>>>>> 57b1e64292e2c376926f7a44b63884f9bf399b32
 
 
 http.createServer(app).listen(app.get('port'), function(){

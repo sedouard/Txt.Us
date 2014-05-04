@@ -1,5 +1,3 @@
-
-
 var twilio_credentials = require('../twilio_credentials.json');
 var twilio = require('twilio');
 var mongoose = require('mongoose');
@@ -87,8 +85,3 @@ var sendSms = function(number, message, cb){
     body: message
   }, cb)
 }
-
-
-
-
-
