@@ -14,13 +14,15 @@ var client = new twilio.RestClient(twilio_credentials.twilio_sid, twilio_credent
 var g_Users = {
   christine: "+15107541837",
   livi: "+17038223932",
-  kat: "+15714352171"
+  kat: "+15714352171",
+  matt: "+17037919734"
 };
 
 var g_Location = {
    "+15107541837" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
    "+17038223932" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
-   "+15714352171" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]}
+   "+15714352171" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
+   "+17037919734" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]}
 };
 
 
@@ -68,12 +70,19 @@ var receive_message = function(req, res){
 
       var foo = m.split(" on ");
 
+      g_Location[from][foo[1]].push(foo[0]);
+
+      console.log(g_Location);
+
 
     }
-    
+
+
+
   }
 
 
+  return sendSms(from, "location saved!", function(){ res.send('') } );
 
 };
 
@@ -84,7 +93,7 @@ var strip = function(str){
 var sendSms = function(number, message, cb){
   console.log("sending "+message+"to number: " + number);
 
-  returnclient.sendMessage({
+  return client.sendMessage({
     to:number,
     from: '+17037634332',
     body: message
