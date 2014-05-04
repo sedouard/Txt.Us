@@ -18,9 +18,9 @@ var g_Users = {
 };
 
 var g_Location = {
-   "+15107541837" : [],
-   "+17038223932" : [],
-   "+15714352171" : []
+   "+15107541837" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
+   "+17038223932" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]},
+   "+15714352171" : {'m':[], 't':[],'w':[],'r':[],'f':[],'s':[]}
 };
 
 
@@ -64,7 +64,11 @@ var receive_message = function(req, res){
     var m = strip(messageArray[i]).toLowerCase();
 
     if(m[0] === 's'){
-      
+      m = strip(m.substring(1,m.length));
+
+      var foo = m.split(" on ");
+
+
     }
     
   }
