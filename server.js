@@ -11,6 +11,18 @@ var twilio = require('twilio');
 
 var client = new twilio.RestClient(twilio_credentials.twilio_sid, twilio_credentials.twilio_auth);
 
+var g_Users = [
+  Christine:{
+    phoneNumber: "+15107541837"
+  },
+  Livi:{
+    phoneNumber: "+17038223932"
+  }
+  Kat:{
+    phoneNumer:"+15714352171"
+  }
+];
+
 
 // { ToCountry: 'US',
 //     ToState: 'VA',
