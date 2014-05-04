@@ -47,24 +47,14 @@ var receive_message = function(req, res){
   var from = message.From;
 
   if(messageArray.length < 1){
-    return sendSms(from, "sent a proper command!", function(){ res.send('') } );
+    return sendSms(from, "send a proper command!", function(){ res.send('') } );
   }
 
   for(int i = 0; i<messageArray.length; i++){
-    var m = messageArray[i].split(":");
-    
-    switch( strip(m[0]) ){
-      case 's':
-        if(!location[from]) location[from] = {name:}
+    var m = strip(messageArray[i]).toLowerCase();
 
-
-        break;
-      case 'r':
-
-
-        break;
-      default:
-        return sendSms(message.From, "Invalid command", function(){ res.send('') } );
+    if(m[0] === 's'){
+      
     }
     
   }
