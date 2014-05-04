@@ -72,10 +72,44 @@ var receive_message = function(req, res){
 
     }
     //parse query
+    //where is <user> on <day>
     else if(m == 'where is'){
-      var name = strip(m.replace('where is', ''));
-      var phoneNumber = g_Users[name];
-      
+      m = strip(m.replace('where is', ''));
+      //steven on tuesday
+      var parts = m.split(' ');
+      var phoneNumber = g_Users[parts[0]];
+      var locations = g_Location[phoneNumber];
+      var result = null;
+      switch(parts[2]){
+        //today is always monday. HACK HACK
+        case 'monday':
+          result = locations.m;
+          break;
+        //tomorrow is always tuesday HACK HACK
+        case 'tuesday':
+          result = locations.t;
+          break;
+        case 'wednesday':
+          result = locations.w;
+          break;
+        case 'thursday':
+          result = locations.r;
+          break;
+        case 'friday':
+          result = locations.f;
+          break;
+        case 'saturday':
+          result = locations.s;
+          break;
+      }
+
+      if(result == null){
+        return sendSms(from, "send a proper command!", function(){ res.send('') } );  
+      }
+      else{
+        return sendSms(from, parts[0] + 'will be at ' + result, function(){ res.send('') } );
+      }
+
       //lookup name 
     }
 
