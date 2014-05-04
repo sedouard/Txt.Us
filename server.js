@@ -23,8 +23,6 @@ var g_Location = {
    "+15714352171" : []
 };
 
-var g_Users = [
-];
 
 // { ToCountry: 'US',
 //     ToState: 'VA',
@@ -72,7 +70,8 @@ var receive_message = function(req, res){
     //parse query
     else if(m == 'where is'){
       var name = strip(m.replace('where is', ''));
-      var phoneNumber = g_Users.
+      var phoneNumber = g_Users[name];
+      
       //lookup name 
     }
 
