@@ -23,6 +23,8 @@ var g_Users = [
   }
 ];
 
+var g_Users = [
+];
 
 // { ToCountry: 'US',
 //     ToState: 'VA',
@@ -65,10 +67,17 @@ var receive_message = function(req, res){
   for(int i = 0; i<messageArray.length; i++){
     var m = strip(messageArray[i]).toLowerCase();
 
+    //parse scheduling request
     if(m[0] === 's'){
       
     }
-    
+    //parse query
+    else if(m == 'where is'){
+      var name = strip(m.replace('where is', ''));
+      var phoneNumber = g_Users.
+      //lookup name 
+    }
+
   }
 
 
